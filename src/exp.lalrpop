@@ -2,17 +2,17 @@ use std::str::FromStr;
 use super::ASTNode;
 grammar;
 pub Expr: Box<ASTNode> = {
-<n:Num> => Box::new(ASTNode::Num(n)),
-"(" <e:Expr> ")" => e,
-"+" <e1:Expr> <e2:Expr> => Box::new(ASTNode::Plus(e1, e2)),
-"-" <e1:Expr> <e2:Expr> => Box::new(ASTNode::Minus(e1, e2)),
-"LIST" <h:Expr> <t:Expr> => Box::new(ASTNode::List(h, t)),
-"HEAD" <l:Expr> => Box::new(ASTNode::Head(l)),
-"TAIL" <l:Expr> => Box::new(ASTNode::Tail(l)),
-"NIL" => Box::new(ASTNode::Nil()),
-<i:Identifier> => Box::new(ASTNode::Symbol(i)),
-"DEFINE" <i:Expr> <e:Expr> => Box::new(ASTNode::Definition(i, e)),
-"SUBST" <e1:Expr> <e2:Expr> => Box::new(ASTNode::Subst(e1, e2)),
+	<n:Num> => Box::new(ASTNode::Num(n)),
+	"(" <e:Expr> ")" => e,
+	"+" <e1:Expr> <e2:Expr> => Box::new(ASTNode::Plus(e1, e2)),
+	"-" <e1:Expr> <e2:Expr> => Box::new(ASTNode::Minus(e1, e2)),
+	"LIST" <h:Expr> <t:Expr> => Box::new(ASTNode::List(h, t)),
+	"HEAD" <l:Expr> => Box::new(ASTNode::Head(l)),
+	"TAIL" <l:Expr> => Box::new(ASTNode::Tail(l)),
+	"NIL" => Box::new(ASTNode::Nil()),
+	<i:Identifier> => Box::new(ASTNode::Symbol(i)),
+	"DEFINE" <i:Expr> <e:Expr> => Box::new(ASTNode::Definition(i, e)),
+	"SUBST" <e1:Expr> <e2:Expr> => Box::new(ASTNode::Subst(e1, e2)),
 };
 
 Num : i32 = <s:r"[0-9]+"> => i32::from_str(s).unwrap();
