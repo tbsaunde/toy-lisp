@@ -17,10 +17,12 @@ pub enum ASTNode {
 }
 
 fn main() {
-    let exp = exp::parse_Expr("(+ 1 (- (HEAD (LIST 1 NIL)) 2))");
-    println!("{:?}", exp);
-    let exp = exp::parse_Expr("(HEAD (LIST 1 (TAIL (LIST 1 2))))");
-    println!("{:?}", exp);
-    let exp = exp::parse_Expr("SUBST x (DEFINE x 1)");
+    let args: Vec<String> = std::env::args().collect();
+    if args.len() != 2 {
+        println!("invalid arguments");
+        return;
+    }
+
+    let exp = exp::parse_Expr(&args[1]);
     println!("{:?}", exp);
 }
